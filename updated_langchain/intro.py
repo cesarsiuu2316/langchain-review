@@ -31,7 +31,7 @@ def create_groq_chat_model(model):
     chat_model = ChatGroq(model=model)
     return chat_model
 
-def main():
+def test_agent_and_models():
     agent = make_agent("groq:llama-3.3-70b-versatile")
     chat_model = create_llm_chat_model("groq:llama-3.3-70b-versatile")
     groq_chat_model = create_groq_chat_model("llama-3.3-70b-versatile")
@@ -48,6 +48,26 @@ def main():
             print(f"LLM chat model response: {response2.content}\n")
             response3 = groq_chat_model.invoke(user_input)
             print(f"Groq chat model response: {response3.content}\n")
+
+def test_streaming_response(model):
+    for chunk in model.stream("Tell me a fun fact"):
+        print(chunk.content, end="", flush=True)
+
+def test_batch_response(model):
+    responses = model.batch([
+        "What is the capital of France?",
+        "What is the largest mammal?",
+        "Who won the World Series in 2020?"
+    ],
+    config={
+        'max_concurrency': 5,  # Limit to 5 concurrent requests
+    })
+    for response in responses:
+        print(f"Batch response: {response.content}\n")
+
+def main():
+    groq_chat_model = create_groq_chat_model("llama-3.3-70b-versatile")
+    test_batch_response(groq_chat_model)
 
 if __name__ == "__main__":
     main()
