@@ -53,6 +53,7 @@ def testing(user_message):
             tool_fn = TOOL_REGISTRY[tool_call["name"]]
             # Appending the tool call to the messages so the model can see the original tool call in the context of the conversation with the tool result.
             messages.append(tool_fn.invoke(tool_call))
+            # this receives a tool message
 
         print("\n========== INVOKE 2 — what the LLM receives ==========")
         for m in messages:
