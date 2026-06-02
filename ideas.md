@@ -49,9 +49,28 @@ Message parameters
 It allows to define a schema so the llm always answer in a structured predefined way
 
 Techniques
-- Pydantic: Runtime validation (user inputs, api requests, llm outputs, configs)
+- Pydantic: Library for runtime validation (user inputs, api requests, llm outputs, configs)
 - TypeDict: type check dicts, passing kwargs, annotation JSON that doesnt need validation, langchain state schemas, no distinct types
 - DataClasses: Gives you methods, clean attribute access, no need of validation for trusted personal objects when coding
 
 
-Pydantic: python library that enforces a scheme a data type structure at runtime (useful for data validation)
+## Middleware
+
+Provides a way to control what happens inside an agent
+- Tracking agents with logging, analytics, debugging
+- transforming prompts and outputs formatting
+- adding retries, fallbacks, early termination logic
+- applying rate limits, guardrails, PII detection
+
+Examples: Summarization of context is a Middleware in agents, Human In the Feedback, Model Call Limit, etc
+
+Summarization Middleware is useful for: 
+- Long running conversations that exceed token limits or context windows
+- Multi-turn dialogues with extensive history
+- Applications where preserverving full conversation context matters.
+
+Human In The Loop: pauses execution for human approval
+- High stakes operations, database writes, financial transactions, etc
+- Compliance workflows where oversight is mandatory
+- Long conversations where feedback guides an agent.
+This provides a way to approve Commands, uses Command class to provide answers to the llm when asked.
