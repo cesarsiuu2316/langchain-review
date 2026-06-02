@@ -49,9 +49,9 @@ Message parameters
 It allows to define a schema so the llm always answer in a structured predefined way
 
 Techniques
-- Pydantic
-- TypeDic
-- Data Structures
+- Pydantic: Runtime validation (user inputs, api requests, llm outputs, configs)
+- TypeDict: type check dicts, passing kwargs, annotation JSON that doesnt need validation, langchain state schemas, no distinct types
+- DataClasses: Gives you methods, clean attribute access, no need of validation for trusted personal objects when coding
 
 
 Pydantic: python library that enforces a scheme a data type structure at runtime (useful for data validation)
